@@ -1,0 +1,42 @@
+:root {
+    --primary-color: #F7ACD0;
+    --secondary-color: #EB74A3;
+    --tertiary-color: #BDE8FB;
+    --quaternary-color: #6e280e;
+    --quintenary-color: #ADB1B2;
+    --sextenary-color: #699FBB;
+    --septenary-color: #6F7475;
+    --default-border: 5px solid var(--quaternary-color);
+}
+
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.calc {
+    background-color: var(--primary-color);
+    border: var(--default-border);
+    box-shadow: 5px 5px 0px 0px var(--secondary-color);
+    border-radius: 15px;
+    padding: 10px;
+    width: 350px;
+}
+
+.calc__display {
+    background-color: var(--quintenary-color);
+    border: var(--default-border);
+    box-shadow: 1px 1px 0px 4px var(--septenary-color) inset;
+    border-radius: 15px 15px 0px 0px;
+    padding: 10px;
+    margin: 0 0 20px;
+}
+
+.display__numbers {
+    text-align: right;
+}
