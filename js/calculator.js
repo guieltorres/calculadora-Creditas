@@ -1,44 +1,20 @@
+import {
+    add,
+    subtract,
+    multiply,
+    divide,
+    calculator
+} from './operators.js';
+
+
 let operator = [];
 let firstNumber = [];
-let secondNumber = [];
 let result = 0;
 let operatorSelected = false;
 const display = document.querySelector(".display__numbers");
 
-const numberOfButtons = document.querySelectorAll(".calc__button");
 
-// Detecting Buttons Clicks
-
-numberOfButtons.forEach(element => {
-    element.addEventListener("click", function () {
-
-        let buttonValue = this.value;
-
-        console.log(buttonValue)
-
-        // let buttonInnerHTML = this.innerHTML;
-
-        buttonAnimation(buttonValue);
-
-        calculation(buttonValue);
-
-    });
-});
-
-// Detecting Keyboard Presses
-
-document.addEventListener("keydown", function (event) {
-
-    console.log(event.code);
-
-    buttonAnimation(event.code);
-
-    calculation(event.code);
-
-});
-
-
-function buttonAnimation(currentButton) {
+export function buttonAnimation(currentButton) {
 
     let activeButton = document.querySelector("." + currentButton);
 
@@ -49,7 +25,7 @@ function buttonAnimation(currentButton) {
     }, 200);
 }
 
-function addToDisplay(currentButton) {
+export function addToDisplay(currentButton) {
 
     if (operatorSelected) {
         firstNumber = parseInt(display.innerHTML);
@@ -64,9 +40,9 @@ function addToDisplay(currentButton) {
 
 }
 
-function calculation(key) {
+export function calculation(key) {
 
-    console.log(key)
+    // console.log(key)
 
     switch (key) {
         case 'Numpad0':
@@ -128,29 +104,7 @@ function calculation(key) {
     }
 }
 
-// Operators
-
-function add(num1, num2) {
-    return num1 + num2;
-}
-
-function subtract(num1, num2) {
-    return num1 - num2;
-}
-
-function multiply(num1, num2) {
-    return num1 * num2;
-}
-
-function divide(num1, num2) {
-    return num1 / num2;
-}
-
-function calculator(num1, num2, operator) {
-    return operator(num1, num2);
-}
-
-function clear() {
+export function clear() {
     display.innerHTML = 0;
     operator = null;
     operatorSelected = false;
