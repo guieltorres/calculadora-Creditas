@@ -64,6 +64,6 @@
     font-weight: bold;
 }
 
-.calc__button:active {
+.pressed {
     background-color: #7cdddd;
 }
