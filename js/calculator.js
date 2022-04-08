@@ -12,33 +12,6 @@ let firstNumber = null;
 let result = 0;
 let operatorSelected = false;
 const display = document.querySelector(".display__numbers");
-
-
-export function buttonAnimation(currentButton) {
-
-    let activeButton = document.querySelector("." + currentButton);
-
-    activeButton.classList.add("pressed");
-
-    setTimeout(function () {
-        activeButton.classList.remove("pressed");
-    }, 200);
-}
-
-
-export function addToDisplay(currentButton) {
-    if (operatorSelected) {
-        firstNumber = parseInt(display.innerHTML);
-        display.innerHTML = currentButton;
-        operatorSelected = false;
-    } else if (display.innerHTML == 0) {
-        display.innerHTML = currentButton;
-    } else {
-        display.innerHTML = display.innerHTML + currentButton;
-    }
-    // console.log(currentButton)
-}
-
 const calc = {
     "Numpad1": x => addToDisplay(x),
     "Numpad2": x => addToDisplay(x),
@@ -66,7 +39,35 @@ const calc = {
         display.innerHTML = Math.floor(result);
         operator = null;
     },
-    "Escape": x => clear(),
+    "Escape": function () {
+        clear()
+    },
+}
+
+
+export function buttonAnimation(currentButton) {
+
+    let activeButton = document.querySelector("." + currentButton);
+
+    activeButton.classList.add("pressed");
+
+    setTimeout(function () {
+        activeButton.classList.remove("pressed");
+    }, 200);
+}
+
+
+export function addToDisplay(currentButton) {
+    if (operatorSelected) {
+        firstNumber = parseInt(display.innerHTML);
+        display.innerHTML = currentButton;
+        operatorSelected = false;
+    } else if (display.innerHTML == 0) {
+        display.innerHTML = currentButton;
+    } else {
+        display.innerHTML = display.innerHTML + currentButton;
+    }
+    // console.log(currentButton)
 }
 
 export function calculation(key, value) {
