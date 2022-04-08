@@ -12,11 +12,13 @@ numberOfButtons.forEach(element => {
 
         let buttonValue = this.value;
 
+        let buttonInnerHTML = this.innerHTML;
+
         console.log(buttonValue)
 
         buttonAnimation(buttonValue);
 
-        calculation(buttonValue);
+        calculation(buttonValue, buttonInnerHTML);
 
     });
 });
