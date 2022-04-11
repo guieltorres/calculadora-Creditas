@@ -8,11 +8,15 @@ import {
 
 
 let operator = null;
-let firstNumber = null;
+let oldOperator = null;
+let firstNumber = 0;
 let result = 0;
 let operatorSelected = false;
+let isCalculing = false;
+
 const display = document.querySelector(".display__numbers");
 const calc = {
+    "Numpad0": x => addToDisplay(x),
     "Numpad1": x => addToDisplay(x),
     "Numpad2": x => addToDisplay(x),
     "Numpad3": x => addToDisplay(x),
@@ -38,9 +42,10 @@ const calc = {
         result = calculator(firstNumber, parseInt(display.innerHTML), operator);
         display.innerHTML = Math.floor(result);
         operator = null;
+        isCalculing = false;
     },
     "Escape": function () {
-        clear()
+        clear();
     },
 }
 
@@ -62,23 +67,30 @@ export function addToDisplay(currentButton) {
         firstNumber = parseInt(display.innerHTML);
         display.innerHTML = currentButton;
         operatorSelected = false;
+        isCalculing = true;
+        oldOperator = operator;
     } else if (display.innerHTML == 0) {
         display.innerHTML = currentButton;
     } else {
         display.innerHTML = display.innerHTML + currentButton;
     }
-    // console.log(currentButton)
+
 }
 
 export function calculation(key, value) {
-
-    calc[key](value)
-
+    calc[key](value);
+    if (isCalculing && (key == "NumpadSubtract" || key == "NumpadAdd" || key == "NumpadMultiply" || key == "NumpadDivide")) {
+        result = calculator(firstNumber, parseInt(display.innerHTML), oldOperator);
+        display.innerHTML = Math.floor(result);
+        isCalculing = false;
+    }
 }
 
 export function clear() {
     display.innerHTML = null;
     operator = null;
+    oldOperator = null;
     operatorSelected = false;
     result = 0;
+    isCalculing = false;
 }
