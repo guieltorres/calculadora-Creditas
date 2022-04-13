@@ -6,6 +6,9 @@
     --quintenary-color: #ADB1B2;
     --sextenary-color: #699FBB;
     --septenary-color: #6F7475;
+    --octonary-color: #6d2262c9;
+    --nonnarius-color: #bdc8fb;
+    --decenary-color: #a7d0ff;
     --default-border: 5px solid var(--quaternary-color);
 }
 
@@ -41,7 +44,7 @@
     text-align: right;
     font-size: 3rem;
     font-weight: bold;
-    color: #6d2262c9;
+    color: var(--octonary-color);
     height: 40px;
 }
 
@@ -54,9 +57,9 @@
 .calc__button {
     background-color: var(--tertiary-color);
     color: var(--quaternary-color);
-    font-size: 2.5rem;
-    height: 4rem;
-    width: 4rem;
+    font-size: 2rem;
+    height: 60px;
+    width: 80px;
     margin: 3px;
     border: var(--default-border);
     box-shadow: 3px 3px 0px 0px var(--sextenary-color);
@@ -65,6 +68,17 @@
     font-weight: bold;
 }
 
+.menu__button {
+    background-color: var(--decenary-color);
+    width: 142px;
+    font-size: 1.5rem
+}
+
+.operator__button {
+    background-color: var(--nonnarius-color);
+    font-size: 1.5rem
+}
+
 .pressed {
-    background-color: #7cdddd;
+    background-color: #6cffff;
 }

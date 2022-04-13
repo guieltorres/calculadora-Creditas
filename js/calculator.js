@@ -26,6 +26,7 @@ const calc = {
     "Numpad7": x => addToDisplay(x),
     "Numpad8": x => addToDisplay(x),
     "Numpad9": x => addToDisplay(x),
+    "NumpadDecimal": x => addToDisplay(x),
     "NumpadAdd": function () {
         operatorSelected = true, operator = add;
     },
@@ -39,14 +40,15 @@ const calc = {
         operatorSelected = true, operator = divide;
     },
     "NumpadEnter": function () {
-        result = calculator(firstNumber, parseInt(display.innerHTML), operator);
-        display.innerHTML = Math.floor(result);
+        printResult();
         operator = null;
-        isCalculing = false;
     },
     "Escape": function () {
         clear();
     },
+    "Backspace": function () {
+        backspace();
+    }
 }
 
 
@@ -64,25 +66,24 @@ export function buttonAnimation(currentButton) {
 
 export function addToDisplay(currentButton) {
     if (operatorSelected) {
-        firstNumber = parseInt(display.innerHTML);
+        firstNumber = parseFloat(display.innerHTML);
         display.innerHTML = currentButton;
         operatorSelected = false;
         isCalculing = true;
         oldOperator = operator;
-    } else if (display.innerHTML == 0) {
+    } else if (display.innerHTML === '0' && currentButton !== '.') {
         display.innerHTML = currentButton;
+    } else if (currentButton == "." && display.innerHTML.includes('.')) {
+        return;
     } else {
         display.innerHTML = display.innerHTML + currentButton;
     }
-
 }
 
 export function calculation(key, value) {
     calc[key](value);
     if (isCalculing && (key == "NumpadSubtract" || key == "NumpadAdd" || key == "NumpadMultiply" || key == "NumpadDivide")) {
-        result = calculator(firstNumber, parseInt(display.innerHTML), oldOperator);
-        display.innerHTML = Math.floor(result);
-        isCalculing = false;
+        printResult();
     }
 }
 
@@ -92,5 +93,22 @@ export function clear() {
     oldOperator = null;
     operatorSelected = false;
     result = 0;
+    isCalculing = false;
+}
+
+export function backspace() {
+    let currentDisplay = display.innerHTML;
+    let editedDisplay = currentDisplay.slice(0, currentDisplay.length - 1);
+    display.innerHTML = editedDisplay
+}
+
+export function printResult() {
+    result = calculator(firstNumber, parseFloat(display.innerHTML), oldOperator);
+    let resultAsStr = result.toString();
+    if (resultAsStr.includes('.')) {
+        display.innerHTML = result.toFixed(2);
+    } else {
+        display.innerHTML = result;
+    }
     isCalculing = false;
 }

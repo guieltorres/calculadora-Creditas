@@ -7,6 +7,7 @@ const numberOfButtons = document.querySelectorAll(".calc__button");
 
 // Detecting Buttons Clicks
 
+
 numberOfButtons.forEach(element => {
     element.addEventListener("click", function () {
 
@@ -14,7 +15,7 @@ numberOfButtons.forEach(element => {
 
         let buttonInnerHTML = this.innerHTML;
 
-        console.log(buttonValue)
+        console.log(buttonValue, buttonInnerHTML)
 
         buttonAnimation(buttonValue);
 
@@ -31,6 +32,6 @@ document.addEventListener("keydown", function (event) {
 
     buttonAnimation(event.code);
 
-    calculation(event.code);
+    calculation(event.code, event.key);
 
 });
