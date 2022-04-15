@@ -6,7 +6,6 @@ import {
     calculator
 } from './operators.js';
 
-
 let operator = null;
 let oldOperator = null;
 let firstNumber = 0;
@@ -16,17 +15,17 @@ let isCalculing = false;
 
 const display = document.querySelector(".display__numbers");
 const calc = {
-    "Numpad0": x => addToDisplay(x),
-    "Numpad1": x => addToDisplay(x),
-    "Numpad2": x => addToDisplay(x),
-    "Numpad3": x => addToDisplay(x),
-    "Numpad4": x => addToDisplay(x),
-    "Numpad5": x => addToDisplay(x),
-    "Numpad6": x => addToDisplay(x),
-    "Numpad7": x => addToDisplay(x),
-    "Numpad8": x => addToDisplay(x),
-    "Numpad9": x => addToDisplay(x),
-    "NumpadDecimal": x => addToDisplay(x),
+    "Numpad0": x => addNumberToDisplay(x),
+    "Numpad1": x => addNumberToDisplay(x),
+    "Numpad2": x => addNumberToDisplay(x),
+    "Numpad3": x => addNumberToDisplay(x),
+    "Numpad4": x => addNumberToDisplay(x),
+    "Numpad5": x => addNumberToDisplay(x),
+    "Numpad6": x => addNumberToDisplay(x),
+    "Numpad7": x => addNumberToDisplay(x),
+    "Numpad8": x => addNumberToDisplay(x),
+    "Numpad9": x => addNumberToDisplay(x),
+    "NumpadDecimal": x => addNumberToDisplay(x),
     "NumpadAdd": function () {
         operatorSelected = true, operator = add;
     },
@@ -51,7 +50,6 @@ const calc = {
     }
 }
 
-
 export function buttonAnimation(currentButton) {
 
     let activeButton = document.querySelector("." + currentButton);
@@ -63,10 +61,9 @@ export function buttonAnimation(currentButton) {
     }, 200);
 }
 
-
-export function addToDisplay(currentButton) {
+export function addNumberToDisplay(currentButton) {
     if (operatorSelected) {
-        firstNumber = parseFloat(display.innerHTML);
+        if (display.innerHTML !== "") firstNumber = parseFloat(display.innerHTML);
         display.innerHTML = currentButton;
         operatorSelected = false;
         isCalculing = true;
@@ -76,7 +73,7 @@ export function addToDisplay(currentButton) {
     } else if (currentButton == "." && display.innerHTML.includes('.')) {
         return;
     } else {
-        display.innerHTML = display.innerHTML + currentButton;
+        if (display.innerHTML.length < 9) display.innerHTML = display.innerHTML + currentButton;
     }
 }
 
@@ -94,21 +91,26 @@ export function clear() {
     operatorSelected = false;
     result = 0;
     isCalculing = false;
+    firstNumber = 0;
 }
 
 export function backspace() {
     let currentDisplay = display.innerHTML;
     let editedDisplay = currentDisplay.slice(0, currentDisplay.length - 1);
-    display.innerHTML = editedDisplay
+    display.innerHTML = editedDisplay;
 }
 
 export function printResult() {
     result = calculator(firstNumber, parseFloat(display.innerHTML), oldOperator);
     let resultAsStr = result.toString();
     if (resultAsStr.includes('.')) {
-        display.innerHTML = result.toFixed(2);
+        display.innerHTML = limit(result.toFixed(2).toString(), 9);
     } else {
-        display.innerHTML = result;
+        display.innerHTML = limit(result.toString(), 9);
     }
     isCalculing = false;
+}
+
+function limit(string, limit) {
+    return string.substring(0, limit)
 }
