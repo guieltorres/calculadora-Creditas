@@ -15,7 +15,7 @@ numberOfButtons.forEach(element => {
 
         let buttonInnerHTML = this.innerHTML;
 
-        console.log(buttonValue, buttonInnerHTML)
+        // console.log(buttonValue, buttonInnerHTML)
 
         buttonAnimation(buttonValue);
 
@@ -28,7 +28,7 @@ numberOfButtons.forEach(element => {
 
 document.addEventListener("keydown", function (event) {
 
-    console.log(event.code);
+    console.log(event.code, event.key);
 
     buttonAnimation(event.code);
 

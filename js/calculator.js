@@ -25,7 +25,7 @@ const calc = {
     "Numpad7": x => addNumberToDisplay(x),
     "Numpad8": x => addNumberToDisplay(x),
     "Numpad9": x => addNumberToDisplay(x),
-    "NumpadDecimal": x => addNumberToDisplay(x),
+    "NumpadComma": x => addNumberToDisplay(x),
     "NumpadAdd": function () {
         operatorSelected = true, operator = add;
     },
