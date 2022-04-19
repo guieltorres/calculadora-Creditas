@@ -42,10 +42,10 @@
 
 .display__numbers {
     text-align: right;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
     color: var(--octonary-color);
-    height: 3.2rem;
+    height: 2.8rem;
 }
 
 .buttons__row {
