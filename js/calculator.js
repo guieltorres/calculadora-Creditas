@@ -98,19 +98,20 @@ export function backspace() {
     let currentDisplay = display.innerHTML;
     let editedDisplay = currentDisplay.slice(0, currentDisplay.length - 1);
     display.innerHTML = editedDisplay;
+    firstNumber = display.innerHTML;
 }
 
 export function printResult() {
     result = calculator(firstNumber, parseFloat(display.innerHTML), oldOperator);
     let resultAsStr = result.toString();
     if (resultAsStr.includes('.')) {
-        display.innerHTML = limit(result.toFixed(2).toString(), 9);
+        display.innerHTML = limitStrLenght(result.toFixed(2).toString(), 9);
     } else {
-        display.innerHTML = limit(result.toString(), 9);
+        display.innerHTML = limitStrLenght(result.toString(), 9);
     }
     isCalculing = false;
 }
 
-function limit(string, limit) {
+function limitStrLenght(string, limit) {
     return string.substring(0, limit)
 }
