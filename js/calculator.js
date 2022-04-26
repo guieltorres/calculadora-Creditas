@@ -13,6 +13,7 @@ let result = 0;
 let operatorSelected = false;
 let isCalculing = false;
 
+const PRECISION = 2;
 const display = document.querySelector(".display__numbers");
 const calc = {
     "Numpad0": x => addNumberToDisplay(x),
@@ -105,7 +106,7 @@ export function printResult() {
     result = calculator(firstNumber, parseFloat(display.innerHTML), oldOperator);
     let resultAsStr = result.toString();
     if (resultAsStr.includes('.')) {
-        display.innerHTML = limitStrLenght(result.toFixed(2).toString(), 9);
+        display.innerHTML = limitStrLenght(result.toFixed(PRECISION).toString(), 9);
     } else {
         display.innerHTML = limitStrLenght(result.toString(), 9);
     }
