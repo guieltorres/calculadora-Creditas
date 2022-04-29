@@ -1,5 +1,6 @@
 import {
     buttonAnimation,
+    // calculation,
     calculation,
 } from './calculator.js'
 
@@ -15,11 +16,9 @@ numberOfButtons.forEach(element => {
 
         let buttonInnerHTML = this.innerHTML;
 
-        // console.log(buttonValue, buttonInnerHTML)
-
         buttonAnimation(buttonValue);
 
-        calculation(buttonValue, buttonInnerHTML);
+        calculation(buttonInnerHTML)
 
         this.blur();
     });
@@ -29,11 +28,11 @@ numberOfButtons.forEach(element => {
 
 document.addEventListener("keydown", function (event) {
 
-    console.log(event.code, event.key);
+    console.log(event.code, event.key, event);
+
+    calculation(event.key)
 
     buttonAnimation(event.code);
-
-    calculation(event.code, event.key);
 
     event.preventDefault();
 });

@@ -16,38 +16,66 @@ let isCalculing = false;
 const PRECISION = 2;
 const display = document.querySelector(".display__numbers");
 const calc = {
-    "Numpad0": x => addNumberToDisplay(x),
-    "Numpad1": x => addNumberToDisplay(x),
-    "Numpad2": x => addNumberToDisplay(x),
-    "Numpad3": x => addNumberToDisplay(x),
-    "Numpad4": x => addNumberToDisplay(x),
-    "Numpad5": x => addNumberToDisplay(x),
-    "Numpad6": x => addNumberToDisplay(x),
-    "Numpad7": x => addNumberToDisplay(x),
-    "Numpad8": x => addNumberToDisplay(x),
-    "Numpad9": x => addNumberToDisplay(x),
-    "NumpadComma": x => addNumberToDisplay(x),
-    "NumpadAdd": function () {
+    "0": x => addNumberToDisplay(x),
+    "1": x => addNumberToDisplay(x),
+    "2": x => addNumberToDisplay(x),
+    "3": x => addNumberToDisplay(x),
+    "4": x => addNumberToDisplay(x),
+    "5": x => addNumberToDisplay(x),
+    "6": x => addNumberToDisplay(x),
+    "7": x => addNumberToDisplay(x),
+    "8": x => addNumberToDisplay(x),
+    "9": x => addNumberToDisplay(x),
+    ".": x => addNumberToDisplay(x),
+    ",": x => addNumberToDisplay('.'),
+    "+": function () {
         operatorSelected = true, operator = add;
     },
-    "NumpadSubtract": function () {
+    "-": function () {
         operatorSelected = true, operator = subtract;
     },
-    "NumpadMultiply": function () {
+    "-": function () {
+        operatorSelected = true, operator = subtract;
+    },
+    "×": function () {
         operatorSelected = true, operator = multiply;
     },
-    "NumpadDivide": function () {
+    "*": function () {
+        operatorSelected = true, operator = multiply;
+    },
+    "÷": function () {
         operatorSelected = true, operator = divide;
     },
-    "NumpadEnter": function () {
+    "/": function () {
+        operatorSelected = true, operator = divide;
+    },
+    "=": function () {
         printResult();
         operator = null;
+    },
+    "Enter": function () {
+        printResult();
+        operator = null;
+    },
+    "C": function () {
+        clear();
     },
     "Escape": function () {
         clear();
     },
+    "⌫": function () {
+        backspace();
+    },
     "Backspace": function () {
         backspace();
+    },
+}
+
+
+export function calculation(key) {
+    calc[key](key);
+    if (isCalculing && (key == "+" || key == "-" || key == "×" || key == "÷" || key == "/" || key == "*")) {
+        printResult();
     }
 }
 
@@ -78,12 +106,6 @@ export function addNumberToDisplay(currentButton) {
     }
 }
 
-export function calculation(key, value) {
-    calc[key](value);
-    if (isCalculing && (key == "NumpadSubtract" || key == "NumpadAdd" || key == "NumpadMultiply" || key == "NumpadDivide")) {
-        printResult();
-    }
-}
 
 export function clear() {
     display.innerHTML = null;
