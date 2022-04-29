@@ -21,6 +21,7 @@ numberOfButtons.forEach(element => {
 
         calculation(buttonValue, buttonInnerHTML);
 
+        this.blur();
     });
 });
 
@@ -28,10 +29,11 @@ numberOfButtons.forEach(element => {
 
 document.addEventListener("keydown", function (event) {
 
-    // console.log(event.code, event.key);
+    console.log(event.code, event.key);
 
     buttonAnimation(event.code);
 
     calculation(event.code, event.key);
 
+    event.preventDefault();
 });
