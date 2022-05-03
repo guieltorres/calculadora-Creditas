@@ -6,13 +6,78 @@ import {
     calculator
 } from './operators.js';
 
-
-let operator = [];
-let firstNumber = [];
+let operator = null;
+let oldOperator = null;
+let firstNumber = 0;
 let result = 0;
 let operatorSelected = false;
-const display = document.querySelector(".display__numbers");
+let isCalculing = false;
 
+const PRECISION = 2;
+const display = document.querySelector(".display__numbers");
+const calc = {
+    "0": x => addNumberToDisplay(x),
+    "1": x => addNumberToDisplay(x),
+    "2": x => addNumberToDisplay(x),
+    "3": x => addNumberToDisplay(x),
+    "4": x => addNumberToDisplay(x),
+    "5": x => addNumberToDisplay(x),
+    "6": x => addNumberToDisplay(x),
+    "7": x => addNumberToDisplay(x),
+    "8": x => addNumberToDisplay(x),
+    "9": x => addNumberToDisplay(x),
+    ".": x => addNumberToDisplay(x),
+    ",": x => addNumberToDisplay('.'),
+    "+": function () {
+        operatorSelected = true, operator = add;
+    },
+    "-": function () {
+        operatorSelected = true, operator = subtract;
+    },
+    "-": function () {
+        operatorSelected = true, operator = subtract;
+    },
+    "×": function () {
+        operatorSelected = true, operator = multiply;
+    },
+    "*": function () {
+        operatorSelected = true, operator = multiply;
+    },
+    "÷": function () {
+        operatorSelected = true, operator = divide;
+    },
+    "/": function () {
+        operatorSelected = true, operator = divide;
+    },
+    "=": function () {
+        printResult();
+        operator = null;
+    },
+    "Enter": function () {
+        printResult();
+        operator = null;
+    },
+    "C": function () {
+        clear();
+    },
+    "Escape": function () {
+        clear();
+    },
+    "⌫": function () {
+        backspace();
+    },
+    "Backspace": function () {
+        backspace();
+    },
+}
+
+
+export function calculation(key) {
+    calc[key](key);
+    if (isCalculing && (key == "+" || key == "-" || key == "×" || key == "÷" || key == "/" || key == "*")) {
+        printResult();
+    }
+}
 
 export function buttonAnimation(currentButton) {
 
@@ -25,88 +90,51 @@ export function buttonAnimation(currentButton) {
     }, 200);
 }
 
-export function addToDisplay(currentButton) {
-
+export function addNumberToDisplay(currentButton) {
     if (operatorSelected) {
-        firstNumber = parseInt(display.innerHTML);
+        if (display.innerHTML !== "") firstNumber = parseFloat(display.innerHTML);
         display.innerHTML = currentButton;
         operatorSelected = false;
-    } else if (display.innerHTML == 0) {
+        isCalculing = true;
+        oldOperator = operator;
+    } else if (display.innerHTML === '0' && currentButton !== '.') {
         display.innerHTML = currentButton;
+    } else if (currentButton == "." && display.innerHTML.includes('.')) {
+        return;
     } else {
-        display.innerHTML = display.innerHTML + currentButton;
-    }
-    // console.log(currentButton)
-
-}
-
-export function calculation(key) {
-
-    // console.log(key)
-
-    switch (key) {
-        case 'Numpad0':
-            addToDisplay(0);
-            break;
-        case 'Numpad1':
-            addToDisplay(1);
-            break;
-        case 'Numpad2':
-            addToDisplay(2);
-            break;
-        case 'Numpad3':
-            addToDisplay(3);
-            break;
-        case 'Numpad4':
-            addToDisplay(4);
-            break;
-        case 'Numpad5':
-            addToDisplay(5);
-            break;
-        case 'Numpad6':
-            addToDisplay(6);
-            break;
-        case 'Numpad7':
-            addToDisplay(7);
-            break;
-        case 'Numpad8':
-            addToDisplay(8);
-            break;
-        case 'Numpad9':
-            addToDisplay(9);
-            break;
-        case 'Escape':
-            clear();
-            break;
-        case 'NumpadAdd':
-            operator = add;
-            operatorSelected = true;
-            break;
-        case 'NumpadSubtract':
-            operator = subtract;
-            operatorSelected = true;
-            break;
-        case 'NumpadMultiply':
-            operator = multiply;
-            operatorSelected = true;
-            break;
-        case 'NumpadDivide':
-            operator = divide;
-            operatorSelected = true;
-            break;
-        case 'NumpadEnter':
-            result = calculator(firstNumber, parseInt(display.innerHTML), operator);
-            display.innerHTML = Math.floor(result);
-            operator = null
-        default:
-            console.log(buttonInnerHTML);
-            break;
+        if (display.innerHTML.length < 9) display.innerHTML = display.innerHTML + currentButton;
     }
 }
+
 
 export function clear() {
-    display.innerHTML = 0;
+    display.innerHTML = null;
     operator = null;
+    oldOperator = null;
     operatorSelected = false;
     result = 0;
+    isCalculing = false;
+    firstNumber = 0;
+}
+
+export function backspace() {
+    let currentDisplay = display.innerHTML;
+    let editedDisplay = currentDisplay.slice(0, currentDisplay.length - 1);
+    display.innerHTML = editedDisplay;
+    firstNumber = display.innerHTML;
+}
+
+export function printResult() {
+    result = calculator(firstNumber, parseFloat(display.innerHTML), oldOperator);
+    let resultAsStr = result.toString();
+    if (resultAsStr.includes('.')) {
+        display.innerHTML = limitStrLenght(result.toFixed(PRECISION).toString(), 9);
+    } else {
+        display.innerHTML = limitStrLenght(result.toString(), 9);
+    }
+    isCalculing = false;
+}
+
+function limitStrLenght(string, limit) {
+    return string.substring(0, limit)
 }
