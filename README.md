@@ -1,4 +1,4 @@
 # calculadora-Creditas
 
 
-![calculator-gif](https://user-images.githubusercontent.com/68649783/166524610-c376b89d-a055-4be8-b2a3-902f3decf91e.gif)
+![calculadora-creditas](https://user-images.githubusercontent.com/68649783/166527520-df5b4283-4c3a-4dc6-98ce-a07e2f7def35.gif)
